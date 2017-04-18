@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Search</string>
+    <string-array name="array_food">
+        <item>Apple Pie</item>
+        <item>Banana Cake</item>
+        <item>Burito</item>
+        <item>Burger</item>
+        <item>Cookie</item>
+        <item>Gum</item>
+        <item>Hot Dog</item>
+        <item>Noodle </item>
+        <item>Pizza</item>
+        <item>Quesadilla</item>
+        <item>Rice Cake</item>
+        <item>Rice Cracker</item>
+        <item>Sandwich</item>
+        <item>Sushi</item>
+        <item>Sashimi</item>
+    </string-array>
+</resources>
