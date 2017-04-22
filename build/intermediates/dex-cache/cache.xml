@@ -3,21 +3,57 @@
 
     <item
         is-multidex="true"
-        jar="/Users/adisonlee/AndroidStudioProjects/SearchApp/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="/Users/adisonlee/AndroidStudioProjects/SearchApp/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_4a9840da59c5f9e51c47a25016b62cf47b5ad657/classes.dex" />
+        <dex dex="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_83fdd240a8a55fa1739236bb4108c48252c0a04b\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/adisonlee/AndroidStudioProjects/SearchApp/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="C:\Users\spenc\.android\build-cache\a486d8821a7492522f085e731da8f989112ecf49\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="011bdffc7df7f9f232a601f94ab1fe8647612d23">
-        <dex dex="/Users/adisonlee/AndroidStudioProjects/SearchApp/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_dc1425ff5b3d97054f3c10c0ef4127a54a82a4c3/classes.dex" />
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_45f1397d94f31421910ce3570e744f2a78fe1bef\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\spenc\.android\build-cache\c3ff48823817b62a41ed04d946abeddb99bbb17a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_abddf60ccd4b558128e61f2fd5c450273c746211\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\spenc\.android\build-cache\4c802da08769f9b61badff8c4a9cece47264f406\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_437ef0340f581d5dc8c51b1de643ae904a85d322\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\spenc\.android\build-cache\52cae5815ee5c5dbf9e8e77d27f3dc6606164155\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_88b0705b33f52740114310d1f7881585e65b34a3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="43a60d6f1b8f1ebcda09974d9c1210e5dffc882c">
+        <dex dex="C:\Users\spenc\Desktop\gitPortal\668-term-project\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_f3ec80dc2b4201e0a38bff3bdef3a7441245eb3f\classes.dex" />
     </item>
 
 </items>

@@ -3,13 +3,15 @@
     android:id="@+id/result_layout_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/cardview_shadow_start_color">
 
-    <ListView
-        android:id="@+id/food_list_view_id"
-        android:layout_width="match_parent"
+    <android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_width="match_parent"
+        android:id="@+id/recycleview_items_id"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>
