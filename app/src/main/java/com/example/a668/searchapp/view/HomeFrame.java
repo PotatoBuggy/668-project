@@ -2,58 +2,85 @@ package com.example.a668.searchapp.view;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
- * Created by spenc on 4/16/2017.
+ * Created by spenc on 4/26/2017.
  */
 
 public class HomeFrame extends Fragment {
-    View homeFrame;
-    Button enter_search;
-    EditText search_bar;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        homeFrame= inflater.inflate(R.layout.home_frame_layout,container,false);
+    View rootView;
+    Button crawl;
+    EditText input_url;
+    URL url;
+    Bundle bundleBox;
+    String host;
 
-        enter_search=(Button) homeFrame.findViewById(R.id.enter_search_btn_id);
-        search_bar= (EditText) homeFrame.findViewById(R.id.search_text_id);
+    @Nullable
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //Launch Search
-        enter_search.setOnClickListener(new View.OnClickListener() {
+        rootView = inflater.inflate(R.layout.home_frame, container, false);
+        crawl= (Button) rootView.findViewById(R.id.crawl_button_id);
+        input_url=(EditText) rootView.findViewById(R.id.url_edittext_id);
+
+        //Go to Search page
+        crawl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Pass Search Data
-                String searchData= search_bar.getText().toString();
+                //Take Input String
+                String urlText= input_url.getText().toString();
 
-                Bundle bundleBox = new Bundle();
-                bundleBox.putString("SearchData",searchData);
+                if(urlText.equals("")){
+                    Toast.makeText(getActivity(), "Please Enter URL Before Proceed." , Toast.LENGTH_LONG)
+                            .show();
+                }else{
 
-                //Go to Result Fragment
-                Fragment nextView= new Result();
-                nextView.setArguments(bundleBox);
+                    //Create Title for Search Page
+                    if (urlText.substring(0,4).equals("http")){
+                        try {
+                            //Get Host Name
+                            url = new URL(urlText);
+                            host = url.getHost();
 
-                FragmentManager fraMng= getFragmentManager();
-                FragmentTransaction fraT= fraMng.beginTransaction()
-                        .replace(R.id.frame_layout_id,nextView);
-                fraT.addToBackStack(nextView.getTag());
-                fraT.commit();
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                            host= "Web Crawler";
+                        }
+                    }else
+                        host= urlText;
+
+                    //Send Host name to nextView
+                    bundleBox = new Bundle();
+                    bundleBox.putString("Title",host);
+
+                    //Go to activity_search fragment
+                    Fragment nextView= new Search();
+                    nextView.setArguments(bundleBox);
+                    FragmentManager fraMng= getFragmentManager();
+                    FragmentTransaction fraT= fraMng.beginTransaction()
+                            .replace(R.id.frame_layout_id,nextView);
+                    fraT.addToBackStack(nextView.getTag());
+                    fraT.commit();
+                }
             }
         });
 
-        return homeFrame;
+        return rootView;
     }
 }
