@@ -6,6 +6,8 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.a668.searchapp.view.SearchResult;
+import com.example.a668.searchapp.view.SearchResultIndex;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,8 +17,7 @@ import org.json.JSONObject;
  */
 public class JsonRequest extends Request{
 
-    // Success listener implemented in controller
-
+    SearchResultIndex searchResult;
 
     /**
      * Class constructor
@@ -37,7 +38,11 @@ public class JsonRequest extends Request{
     protected Response parseNetworkResponse(NetworkResponse response) {
         // Convert byte[] data received in the response to String
         String jsonString = new String(response.data);
+        searchResult = new SearchResultIndex(response);
         Log.i("response string", jsonString);
+
+
+
 
         JSONObject jsonObject;
 

@@ -112,7 +112,6 @@ public class Result extends Fragment {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.i("search", query);
                 if(query.length() > 1) {
                     controller.cancelAllRequests(context);
                     controller.sendRequest(query, context);
@@ -156,6 +155,6 @@ public class Result extends Fragment {
         //Receive Search Data from Previous Fragment
         search.setQuery(searchData,false);
 
-        super .onCreateOptionsMenu(menu, inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

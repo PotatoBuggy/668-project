@@ -1,5 +1,9 @@
 package com.example.a668.searchapp.view;
 
+import android.util.Log;
+
+import com.android.volley.NetworkResponse;
+import com.example.a668.searchapp.request.JsonRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,8 +24,9 @@ public class SearchResultIndex  {
     public SearchResultIndex() {
     }
 
-    public SearchResultIndex(String crawlerResponse) {
-        parseRes(crawlerResponse);
+    public SearchResultIndex(NetworkResponse crawlerResponse) {
+        String jsonString = new String(crawlerResponse.data);
+        parseRes(jsonString);
         //parseResponse(crawlerResponse);
 //        if (searchResultIndex.length != numFound) {
 //            System.out.println("Error number of Results Found: " + numFound);
@@ -50,8 +55,13 @@ public class SearchResultIndex  {
 
         Gson gson = new GsonBuilder().create();
         searchResultIndex = gson.fromJson(response, SearchResult[].class);
-//        System.out.print(searchResultIndex[1].getTitle());
-//        System.out.print(searchResultIndex);
+        //System.out.print(searchResultIndex[1].getTitle());
+        //System.out.print(searchResultIndex);
+        for(SearchResult result: searchResultIndex)
+        {
+            Log.i("parseResponse", result.toString());
+        }
+
 
     }
     public static String getFileContents(final File file) throws IOException {
@@ -78,7 +88,8 @@ public class SearchResultIndex  {
     }
 
     public static void main(String args[]) {
-        File file = new File("C:\\Users\\rain2\\StudioProjects\\668-term-project\\app\\src\\main\\java\\com\\example\\a668\\searchapp\\view\\JSONparseTest2.txt");
+        //File file = new File("C:\\Users\\rain2\\StudioProjects\\668-term-project\\app\\src\\main\\java\\com\\example\\a668\\searchapp\\view\\JSONparseTest2.txt");
+        File file = new File("/Users/adisonlee/Documents/668/668-term-project/app/src/main/java/com/example/a668/searchapp/view/JSONparseTest2.txt");
         String response = null;
         try {
             response = getFileContents(file);
@@ -86,9 +97,9 @@ public class SearchResultIndex  {
             e.printStackTrace();
         }
 
-        System.out.println(response);
-        SearchResultIndex test = new SearchResultIndex(response);
-        System.out.println(test.searchResultIndex[1].getURL());
+        //System.out.println(response);
+        //SearchResultIndex test = new SearchResultIndex(response);
+        //System.out.println(test.searchResultIndex[1].getURL());
     }
 
 }
