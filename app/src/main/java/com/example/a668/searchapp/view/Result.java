@@ -1,10 +1,13 @@
 package com.example.a668.searchapp.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +18,10 @@ import android.app.Fragment;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+
+import com.example.a668.searchapp.controller.JsonController;
 
 import java.util.ArrayList;
 
@@ -31,6 +37,7 @@ public class Result extends Fragment {
     LinearLayoutManager recylerManager;
     RVAdapter rvadapter;
     private ArrayList<Data> dataList;
+    JsonController controller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -42,6 +49,19 @@ public class Result extends Fragment {
         //Set Up Recycler View
         recycler_view.setHasFixedSize(true);
         recycler_view.setLayoutManager(recylerManager);
+
+        controller = new JsonController(
+                new JsonController.OnResponseListener() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.i("\nonFailure", "onFailure\n");
+                    }
+                });
 
         //Receive Search Data
         Bundle bundle_box= getArguments();
@@ -76,7 +96,6 @@ public class Result extends Fragment {
         recycler_view.setAdapter(rvadapter);
     }
 
-
     //Create Search Field Through Menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -87,30 +106,49 @@ public class Result extends Fragment {
         //Create Search
         SearchView search = (SearchView)items.getActionView();
 
+        final Context context = this.getActivity();
+
         //Add Search Function
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
-            public boolean onQueryTextSubmit(String Query){
-               return false;
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("search", query);
+                if(query.length() > 1) {
+                    controller.cancelAllRequests(context);
+                    controller.sendRequest(query, context);
+                    return false;
+                } else {
+                    Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
+                    recycler_view.setVisibility(View.GONE);
+                    return true;
+                }
             }
 
             //Filter Text to Search
             @Override
             public boolean onQueryTextChange(String newText){
 
-                newText = newText.toLowerCase();
-                ArrayList<Data> newList = new ArrayList<Data>();
+//                newText = newText.toLowerCase();
+//                ArrayList<Data> newList = new ArrayList<Data>();
+//
+//                //Look for a search key work in dataList object
+//                for (Data data : dataList){
+//                   String title = data.getTitle().toLowerCase();
+//                    if(title.contains(newText)){
+//                        newList.add(data);
+//                    }
+//                }
+//
+//                //Show result in Recycler View
+//                rvadapter.setFilter(newList);
 
-                //Look for a search key work in dataList object
-                for (Data data : dataList){
-                   String title = data.getTitle().toLowerCase();
-                    if(title.contains(newText)){
-                        newList.add(data);
-                    }
+                if(newText.length() > 1) {
+                    controller.cancelAllRequests(context);
+                    controller.sendRequest(newText, context);
+                } else if(newText.equals("")) {
+                    recycler_view.setVisibility(View.GONE);
+                    Log.i("nothing", "\nnothing entered\n");
                 }
-
-                //Show result in Recycler View
-                rvadapter.setFilter(newList);
                 return true;
             }
         });

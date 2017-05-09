@@ -1,6 +1,8 @@
 package com.example.a668.searchapp.controller;
 
 
+import android.app.Application;
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -20,6 +22,7 @@ public class JsonController {
 
     private OnResponseListener responseListener;
 
+
     /**
      *
      * @param responseListener  {@link OnResponseListener}
@@ -32,13 +35,13 @@ public class JsonController {
      * Adds request to volley request queue
      * @param query query term for search
      */
-    public void sendRequest(String query){
+    public void sendRequest(String query, Context context){
 
         // Request Method
         int method = Request.Method.GET;
 
 
-        String test = "http://10.0.2.2:8983/solr/SFSU_test/select?indent=on&q=" + Uri.encode(query) + "&wt=json&rows=10&fl=dc_title_s,id";
+        String test = "http://10.0.2.2:8983/solr/SFSU_test/select?indent=on&q=" + Uri.encode(query) + "&wt=json&rows=10&fl=dc_title_s,id&omitHeader=true";
         String url = test;
 
 
@@ -64,21 +67,13 @@ public class JsonController {
         request.setTag(TAG);
 
         // Get RequestQueue from VolleySingleton
-        //VolleySingleton.getInstance(App.getContext()).addToRequestQueue(request);
+        VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
-    /**
-     * <p>Cancels all request pending in request queue,</p>
-     * <p> There is no way to control the request already processed</p>
-     */
-    public void cancelAllRequests() {
-        //VolleySingleton.getInstance(App.getContext()).cancelAllRequests(TAG);
+    public void cancelAllRequests(Context context) {
+        VolleySingleton.getInstance(context).cancelAllRequests(TAG);
     }
 
-//    /**
-//     *  Interface to communicate between {@link android.app.Activity} and {@link JsonRequest}
-//     *  <p>Object available in {@link JsonRequest} and implemented in {@link com.example.volley_template.MainActivity}</p>
-//     */
     public interface OnResponseListener {
         void onSuccess();
         void onFailure(String errorMessage);
