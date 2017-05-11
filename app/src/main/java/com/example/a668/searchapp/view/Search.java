@@ -48,7 +48,6 @@ public class Search extends Fragment {
                 new JsonController.OnResponseListener() {
                     @Override
                     public void onSuccess() {
-                        Log.i("\nonSuccess", "Success");
                     }
 
                     @Override
@@ -56,6 +55,7 @@ public class Search extends Fragment {
                         Log.i("\nonFailure", "onFailure\n");
                     }
                 });
+
 
         //Launch Search
         enter_search.setOnClickListener(new View.OnClickListener() {
@@ -65,46 +65,36 @@ public class Search extends Fragment {
                 //Pass Search Data
                 String searchData= search_bar.getText().toString();
 
-                if(searchData.length() > 1) {
-                    Log.i("Search.java", searchData);
-                    controller.cancelAllRequests(context);
-                    controller.sendRequest(searchData, context);
-                    Log.i("\nSearch.java: ", "After Request");
-
-                    Bundle bundleBox = new Bundle();
-                    bundleBox.putString("SearchData",searchData);
-
-                    //Go to Result Fragment
-                    Fragment nextView= new Result();
-                    nextView.setArguments(bundleBox);
-
-                    FragmentManager fraMng= getFragmentManager();
-                    FragmentTransaction fraT= fraMng.beginTransaction()
-                            .replace(R.id.frame_layout_id,nextView);
-                    fraT.addToBackStack(nextView.getTag());
-                    fraT.commit();
-
-                } else {
-                    Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
-                    search_bar.setVisibility(View.GONE);
-                }
-
-
-//                Bundle bundleBox = new Bundle();
-//                bundleBox.putString("SearchData",searchData);
+//                if(searchData.length() > 1) {
+//                    Log.i("Search.java", searchData);
+//                    controller.cancelAllRequests(context);
+//                    controller.sendRequest(searchData, context);
+//                    Log.i("\nSearch.java: ", "After Request");
 //
-//                //Go to Result Fragment
-//                Fragment nextView= new Result();
-//                nextView.setArguments(bundleBox);
-//
-//                FragmentManager fraMng= getFragmentManager();
-//                FragmentTransaction fraT= fraMng.beginTransaction()
-//                        .replace(R.id.frame_layout_id,nextView);
-//                fraT.addToBackStack(nextView.getTag());
-//                fraT.commit();
+//                } else {
+//                    Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
+//                    search_bar.setVisibility(View.GONE);
+//                }
+
+                Bundle bundleBox = new Bundle();
+                bundleBox.putString("SearchData",searchData);
+
+                //Go to Result Fragment
+                Fragment nextView= new Result();
+                nextView.setArguments(bundleBox);
+
+                FragmentManager fraMng= getFragmentManager();
+                FragmentTransaction fraT= fraMng.beginTransaction()
+                        .replace(R.id.frame_layout_id,nextView);
+                fraT.addToBackStack(nextView.getTag());
+                fraT.commit();
+
             }
         });
 
         return homeFrame;
     }
+
+
+
 }

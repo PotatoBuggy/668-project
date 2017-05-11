@@ -44,7 +44,9 @@ public class Result extends Fragment {
     RVAdapter rvadapter;
     private ArrayList<SearchResult> dataList;
     JsonController controller;
-    SearchResult searchResult;
+    SearchResultIndex searchResultIndex;
+    SearchResult[] parsedRes = new SearchResult[1];
+    String temp;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -72,47 +74,61 @@ public class Result extends Fragment {
                     }
                 });
 
-        //Receive Search Data
-//        Bundle bundle_box= getArguments();
-//        searchData= bundle_box.getString("SearchData");
-//
-//        if(searchData != null) {
-//            Log.i("Result.java", searchData);
-//            controller.cancelAllRequests(context);
-//            controller.sendRequest(searchData, context);
-//            Log.i("\nResult.java: ", "After Request");
-//        } else {
-//            Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
-//            recycler_view.setVisibility(View.GONE);
-//        }
 
-        Log.i("\nResult.java: ", "Outside Request");
+        //Receive Search Data
+        Bundle bundle_box= getArguments();
+        searchData= bundle_box.getString("SearchData");
+
+        if(searchData != null) {
+//            Log.i("Result.java", searchData);
+            controller.cancelAllRequests(context);
+            controller.sendRequest(searchData, context);
+//            Log.i("\nResult.java: ", "After Request");
+        } else {
+            Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
+            recycler_view.setVisibility(View.GONE);
+        }
 
         //Add data to Recycler View
         initializeData();
-
-        Log.i("\nResult.java: ", "1");
+//        Log.i("\nAfter init", "After initiate data\n");
 
         //Enable Search Field
         setHasOptionsMenu(true);
 
-        Log.i("\nResult.java: ", "2");
-
         //Set up Recycler View
         initializeAdapter();
-
-        Log.i("\nResult.java: ", "3");
 
         return rootView;
     }
 
+    public void jsonString(String crawlerResponse)
+    {
+//        Log.i("\n Result.java", crawlerResponse);
+        searchResultIndex = new SearchResultIndex(crawlerResponse);
+
+//        parsedRes[0] = searchResultIndex.searchResultIndex[0];
+
+//        Log.i("parsedRes array: ", parsedRes[0].toString());
+
+
+        for(SearchResult result: searchResultIndex.searchResultIndex)
+        {
+            //Log.i("Parsed Result: ", result.toString() + "\n");
+            Log.i("Title: ", "\n\n" + result.getTitle() + "\n\n");
+            Log.i("URL: ", "\n\n" + result.getURL() + "\n\n");
+            Log.i("\n-----", "----\n\n");
+        }
+
+    }
+
     //Add Data to dataList object from the Data class.
     public void initializeData(){
-        Log.i("Result.java first: ", "");
+        Log.i("\n Result.java initData", " ");
         dataList = new ArrayList<>();
-        //dataList.add(new SearchResult("Title", results, "Description"));
+//        dataList.add(new SearchResult("Title", parsedRes[0].getTitle(), "des"));
+//        Log.i("parsedRes", parsedRes[0].getTitle());
 
-        //Log.i("Result.java", dataList.get(0).getTitle());
     }
 
     private void initializeAdapter(){
@@ -130,52 +146,52 @@ public class Result extends Fragment {
         //Create Search
         SearchView search = (SearchView)items.getActionView();
 
-//        final Context context = this.getActivity();
+        final Context context = this.getActivity();
+
+        //Add Search Function
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("search", query);
+                if(query.length() > 1) {
+                    controller.cancelAllRequests(context);
+                    controller.sendRequest(query, context);
+                    return false;
+                } else {
+                    Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
+                    recycler_view.setVisibility(View.GONE);
+                    return true;
+                }
+            }
+
+            //Filter Text to Search
+            @Override
+            public boolean onQueryTextChange(String newText){
+
+//                newText = newText.toLowerCase();
+//                ArrayList<Data> newList = new ArrayList<Data>();
 //
-//        //Add Search Function
-//        search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                Log.i("search", query);
-//                if(query.length() > 1) {
-//                    controller.cancelAllRequests(context);
-//                    controller.sendRequest(query, context);
-//                    return false;
-//                } else {
-//                    Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
-//                    recycler_view.setVisibility(View.GONE);
-//                    return true;
+//                //Look for a search key work in dataList object
+//                for (Data data : dataList){
+//                   String title = data.getTitle().toLowerCase();
+//                    if(title.contains(newText)){
+//                        newList.add(data);
+//                    }
 //                }
-//            }
 //
-//            //Filter Text to Search
-//            @Override
-//            public boolean onQueryTextChange(String newText){
-//
-////                newText = newText.toLowerCase();
-////                ArrayList<Data> newList = new ArrayList<Data>();
-////
-////                //Look for a search key work in dataList object
-////                for (Data data : dataList){
-////                   String title = data.getTitle().toLowerCase();
-////                    if(title.contains(newText)){
-////                        newList.add(data);
-////                    }
-////                }
-////
-////                //Show result in Recycler View
-////                rvadapter.setFilter(newList);
-//
-//                if(newText.length() > 1) {
-//                    controller.cancelAllRequests(context);
-//                    controller.sendRequest(newText, context);
-//                } else if(newText.equals("")) {
-//                    recycler_view.setVisibility(View.GONE);
-//                    Log.i("nothing", "\nnothing entered\n");
-//                }
-//                return true;
-//            }
-//        });
+//                //Show result in Recycler View
+//                rvadapter.setFilter(newList);
+
+                if(newText.length() > 1) {
+                    controller.cancelAllRequests(context);
+                    controller.sendRequest(newText, context);
+                } else if(newText.equals("")) {
+                    recycler_view.setVisibility(View.GONE);
+                    Log.i("nothing", "\nnothing entered\n");
+                }
+                return true;
+            }
+        });
 
         //Receive Search Data from Previous Fragment
         search.setQuery(searchData,false);

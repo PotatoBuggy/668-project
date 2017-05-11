@@ -24,6 +24,10 @@ public class SearchResultIndex  {
     int numFound;
     Result results;
 
+    public SearchResultIndex(){
+
+    }
+
 //    public SearchResultIndex(NetworkResponse crawlerResponse) {
 //        String jsonString = new String(crawlerResponse.data);
 //        parseRes(jsonString);
@@ -36,9 +40,10 @@ public class SearchResultIndex  {
 
     public SearchResultIndex(String crawlerResponse)
     {
-        Log.i("\nCrawler Response: ", crawlerResponse);
+//        Log.i("\nCrawler Response: ", crawlerResponse);
         parseRes(crawlerResponse);
-        Log.i("\nParsing done", "parsed");
+//        Log.i("\nParsing done", "parsed");
+
     }
 
     //Parses to get string INSIDE OF  [...]
@@ -64,13 +69,14 @@ public class SearchResultIndex  {
         searchResultIndex = gson.fromJson(response, SearchResult[].class);
         //System.out.print(searchResultIndex[0].getTitle());
         //System.out.print(searchResultIndex);
-//        Log.i("\nparseResponse[0]: ", searchResultIndex[0].getTitle());
         for(SearchResult result: searchResultIndex)
         {
-            Log.i("\nparseResponse", result.toString());
+//            Log.i("\nparseResponse", result.toString());
         }
 
     }
+
+
 
 
     public static String getFileContents(final File file) throws IOException {

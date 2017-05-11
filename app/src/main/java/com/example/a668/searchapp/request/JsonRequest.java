@@ -6,6 +6,8 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.a668.searchapp.view.Result;
+import com.example.a668.searchapp.view.Search;
 import com.example.a668.searchapp.view.SearchResult;
 import com.example.a668.searchapp.view.SearchResultIndex;
 
@@ -18,6 +20,9 @@ import org.json.JSONObject;
 public class JsonRequest extends Request{
 
     SearchResultIndex searchResult;
+    Result result = new Result();
+    Search search = new Search();
+    private Response.Listener successListener;
 
     /**
      * Class constructor
@@ -31,6 +36,7 @@ public class JsonRequest extends Request{
                         Response.Listener successListener,
                         Response.ErrorListener errorListener) {
         super(method, url, errorListener);
+        this.successListener = successListener;
 
     }
 
@@ -39,21 +45,23 @@ public class JsonRequest extends Request{
         // Convert byte[] data received in the response to String
         String jsonString = new String(response.data);
 //        searchResult = new SearchResultIndex(response);
-        Log.i("JsonRequest.java", jsonString);
-        searchResult = new SearchResultIndex(jsonString);
-
+//        Log.i("JsonRequest.java", jsonString);
+        //searchResult = new SearchResultIndex(jsonString);
+        result.jsonString(jsonString);
 
 
 
 
         JSONObject jsonObject;
 
-        return Response.success("1", getCacheEntry());
+        return Response.success(jsonString, getCacheEntry());
     }
+
 
     @Override
     protected void deliverResponse(Object response) {
 
+        successListener.onResponse(response);
     }
 
 }

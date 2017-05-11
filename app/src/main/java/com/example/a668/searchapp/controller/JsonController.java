@@ -18,6 +18,7 @@ import com.example.a668.searchapp.volley.VolleySingleton;
  */
 public class JsonController {
 
+    public String newJsonString;
     private final int TAG = 100;
 
     private OnResponseListener responseListener;
@@ -46,13 +47,15 @@ public class JsonController {
 
 
         // Create new request using JsonRequest
-        JsonRequest request
-                = new JsonRequest(
+        JsonRequest request = new JsonRequest(
                 method,
                 url,
                 new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {
+
+                        newJsonString = String.valueOf(response);
+//                        Log.i("Response: ", String.valueOf(response));
                     }
                 },
                 new Response.ErrorListener() {
@@ -68,6 +71,7 @@ public class JsonController {
 
         // Get RequestQueue from VolleySingleton
         VolleySingleton.getInstance(context).addToRequestQueue(request);
+//        Log.i("\nJsonController.java", "After add to request queue");
     }
 
     public void cancelAllRequests(Context context) {
