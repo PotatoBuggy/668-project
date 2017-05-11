@@ -2,14 +2,20 @@ package com.example.a668.searchapp.view;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.a668.searchapp.controller.JsonController;
 
 
 /**
@@ -22,6 +28,7 @@ public class Search extends Fragment {
     EditText search_bar;
     TextView title;
     String titleText;
+    JsonController controller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeFrame= inflater.inflate(R.layout.activity_search,container,false);
@@ -35,6 +42,21 @@ public class Search extends Fragment {
         titleText= bundle_box.getString("Title");
         title.setText(titleText);
 
+        final Context context = this.getActivity();
+
+        controller = new JsonController(
+                new JsonController.OnResponseListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.i("\nonSuccess", "Success");
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.i("\nonFailure", "onFailure\n");
+                    }
+                });
+
         //Launch Search
         enter_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,18 +65,43 @@ public class Search extends Fragment {
                 //Pass Search Data
                 String searchData= search_bar.getText().toString();
 
-                Bundle bundleBox = new Bundle();
-                bundleBox.putString("SearchData",searchData);
+                if(searchData.length() > 1) {
+                    Log.i("Search.java", searchData);
+                    controller.cancelAllRequests(context);
+                    controller.sendRequest(searchData, context);
+                    Log.i("\nSearch.java: ", "After Request");
 
-                //Go to Result Fragment
-                Fragment nextView= new Result();
-                nextView.setArguments(bundleBox);
+                    Bundle bundleBox = new Bundle();
+                    bundleBox.putString("SearchData",searchData);
 
-                FragmentManager fraMng= getFragmentManager();
-                FragmentTransaction fraT= fraMng.beginTransaction()
-                        .replace(R.id.frame_layout_id,nextView);
-                fraT.addToBackStack(nextView.getTag());
-                fraT.commit();
+                    //Go to Result Fragment
+                    Fragment nextView= new Result();
+                    nextView.setArguments(bundleBox);
+
+                    FragmentManager fraMng= getFragmentManager();
+                    FragmentTransaction fraT= fraMng.beginTransaction()
+                            .replace(R.id.frame_layout_id,nextView);
+                    fraT.addToBackStack(nextView.getTag());
+                    fraT.commit();
+
+                } else {
+                    Toast.makeText(getActivity(), "Must provide more than one character", Toast.LENGTH_SHORT).show();
+                    search_bar.setVisibility(View.GONE);
+                }
+
+
+//                Bundle bundleBox = new Bundle();
+//                bundleBox.putString("SearchData",searchData);
+//
+//                //Go to Result Fragment
+//                Fragment nextView= new Result();
+//                nextView.setArguments(bundleBox);
+//
+//                FragmentManager fraMng= getFragmentManager();
+//                FragmentTransaction fraT= fraMng.beginTransaction()
+//                        .replace(R.id.frame_layout_id,nextView);
+//                fraT.addToBackStack(nextView.getTag());
+//                fraT.commit();
             }
         });
 

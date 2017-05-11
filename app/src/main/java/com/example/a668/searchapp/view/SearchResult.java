@@ -1,5 +1,7 @@
 package com.example.a668.searchapp.view;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -18,19 +20,20 @@ import java.io.InputStreamReader;
 public class SearchResult {
 
     @SerializedName("dc_title_s")
-    private String title;
+    public String title;
 
     @SerializedName("id")
-    private String URL;
+    public String URL;
 
     //TODO: searlized name for des
-    private String description;
+    public String description;
 
     public SearchResult(){
 
     }
 
     public SearchResult(String titleIn, String URLIn, String descriptionIn){
+
         this.title = titleIn;
         this.URL = URLIn;
         this.description = descriptionIn;

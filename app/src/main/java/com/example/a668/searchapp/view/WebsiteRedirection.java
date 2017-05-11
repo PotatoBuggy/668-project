@@ -15,7 +15,7 @@ public class WebsiteRedirection extends Fragment
     {
         Intent browserIntent = null;
 
-        if(searchResult != null)
+        /*if(searchResult != null)
         {
             if(searchResult.equals("Google"))
             {
@@ -41,7 +41,9 @@ public class WebsiteRedirection extends Fragment
             {
                 browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com"));
             }
-        }
+        }*/
+
+        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchResult));
         return browserIntent;
     }
 

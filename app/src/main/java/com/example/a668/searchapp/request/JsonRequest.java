@@ -38,8 +38,10 @@ public class JsonRequest extends Request{
     protected Response parseNetworkResponse(NetworkResponse response) {
         // Convert byte[] data received in the response to String
         String jsonString = new String(response.data);
-        searchResult = new SearchResultIndex(response);
-        Log.i("response string", jsonString);
+//        searchResult = new SearchResultIndex(response);
+        Log.i("JsonRequest.java", jsonString);
+        searchResult = new SearchResultIndex(jsonString);
+
 
 
 

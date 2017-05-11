@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by rain-SB on 5/4/2017.
@@ -21,17 +22,23 @@ import java.io.InputStreamReader;
 public class SearchResultIndex  {
     SearchResult[] searchResultIndex;
     int numFound;
-    public SearchResultIndex() {
-    }
+    Result results;
 
-    public SearchResultIndex(NetworkResponse crawlerResponse) {
-        String jsonString = new String(crawlerResponse.data);
-        parseRes(jsonString);
-        //parseResponse(crawlerResponse);
-//        if (searchResultIndex.length != numFound) {
-//            System.out.println("Error number of Results Found: " + numFound);
-//            System.out.println("Results Returned: " + searchResultIndex.length);
-//        }
+//    public SearchResultIndex(NetworkResponse crawlerResponse) {
+//        String jsonString = new String(crawlerResponse.data);
+//        parseRes(jsonString);
+//        //parseResponse(crawlerResponse);
+////        if (searchResultIndex.length != numFound) {
+////            System.out.println("Error number of Results Found: " + numFound);
+////            System.out.println("Results Returned: " + searchResultIndex.length);
+////        }
+//    }
+
+    public SearchResultIndex(String crawlerResponse)
+    {
+        Log.i("\nCrawler Response: ", crawlerResponse);
+        parseRes(crawlerResponse);
+        Log.i("\nParsing done", "parsed");
     }
 
     //Parses to get string INSIDE OF  [...]
@@ -55,15 +62,17 @@ public class SearchResultIndex  {
 
         Gson gson = new GsonBuilder().create();
         searchResultIndex = gson.fromJson(response, SearchResult[].class);
-        //System.out.print(searchResultIndex[1].getTitle());
+        //System.out.print(searchResultIndex[0].getTitle());
         //System.out.print(searchResultIndex);
+//        Log.i("\nparseResponse[0]: ", searchResultIndex[0].getTitle());
         for(SearchResult result: searchResultIndex)
         {
-            Log.i("parseResponse", result.toString());
+            Log.i("\nparseResponse", result.toString());
         }
 
-
     }
+
+
     public static String getFileContents(final File file) throws IOException {
         final InputStream inputStream = new FileInputStream(file);
         final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
