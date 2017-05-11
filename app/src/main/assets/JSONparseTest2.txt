@@ -1,0 +1,38 @@
+{
+
+  "response":{"numFound":391,"start":0,"docs":[
+      {
+        "dc_title_s":"Zhang leads official Olympic documentary crew - SF State News - San Francisco State University",
+        "id":"http://www.sfsu.edu/~news/2008/spring/34.html"},
+{
+        "dc_title_s":"Office of Research and Sponsored Programs",
+        "id":"http://www.sfsu.edu/%7Eorspwww/_preaward/_submit/applicantinfo.html"},
+      {
+        "dc_title_s":"Registrar's Office - San Francisco State University",
+        "id":"http://www.sfsu.edu/~admisrec/reg/ga.htm"},
+      {
+        "dc_title_s":"Registrar's Office - San Francisco State University",
+        "id":"https://www.sfsu.edu/~admisrec/reg/ga.htm"},
+      {
+        "dc_title_s":"Registrar's Office - San Francisco State University",
+        "id":"http://www.sfsu.edu/%7Eadmisrec/reg/ga.htm"},
+      {
+        "dc_title_s":"Residential Life - San Francisco State University",
+        "id":"http://www.sfsu.edu/~reslife/conductlprocess.html"},
+      {
+        "dc_title_s":"First Year/Freshmen Mandatory Advising",
+        "id":"http://www.sfsu.edu/~fyi/1stSemester/part2/segment2.html"},
+      {
+        "dc_title_s":"Office of Research and Sponsored Programs",
+        "id":"http://www.sfsu.edu/~orspwww/_elecsub/_nihcommons/nihcommons.html"},
+      {
+        "dc_title_s":"Office of Research and Sponsored Programs",
+        "id":"http://www.sfsu.edu/%7Eorspwww/_elecsub/_nihcommons/nihcommons.html"},
+      {
+        "id":"http://www.sfsu.edu/~admisrec/forms/regforms/notaryrequest.pdf"},
+      {
+        "id":"https://www.sfsu.edu/~admisrec/forms/regforms/notaryrequest.pdf"},
+      {
+        "dc_title_s":"Public Affairs 2002 Press Releases",
+                "id":"http://www.sfsu.edu/%7Enews/prsrelea/fy02/043.htm"}]
+          }}

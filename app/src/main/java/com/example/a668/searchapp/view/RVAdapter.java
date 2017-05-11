@@ -19,7 +19,7 @@ import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ItemViewHolder> {
 
-    List<Data> dataList;
+    List<SearchResult> dataList;
     WebsiteRedirection redirectSearchResult;
 
     public class ItemViewHolder extends RecyclerView.ViewHolder
@@ -28,6 +28,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ItemViewHolder> {
         CardView card_view;
         TextView title;
         TextView description;
+        TextView url;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -35,6 +36,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ItemViewHolder> {
             card_view= (CardView) itemView.findViewById(R.id.card_view_id);
             title = (TextView)itemView.findViewById(R.id.title_id);
             description = (TextView)itemView.findViewById(R.id.description_id);
+            url = (TextView)itemView.findViewById(R.id.url_id);
         }
 
         //OnClick Listener is now here
@@ -42,13 +44,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ItemViewHolder> {
         public void onClick(View v) {
 
             redirectSearchResult = new WebsiteRedirection();
-            String itemClicked = title.getText().toString();
+            String itemClicked = url.getText().toString();
 
             v.getContext().startActivity(redirectSearchResult.redirectedWebsite(itemClicked));
         }
     }
 
-    RVAdapter(List<Data> dataList){
+    RVAdapter(List<SearchResult> dataList){
         this.dataList = dataList;
     }
 
@@ -70,6 +72,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ItemViewHolder> {
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
         itemViewHolder.title.setText(dataList.get(i).title);
+        itemViewHolder.url.setText(dataList.get(i).URL);
         itemViewHolder.description.setText(dataList.get(i).description);
     }
 
@@ -79,7 +82,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ItemViewHolder> {
     }
 
     //RecyclerView Filter method
-    public void setFilter (ArrayList<Data> newList){
+    public void setFilter (ArrayList<SearchResult> newList){
 
         dataList= new ArrayList<>();
         dataList.addAll(newList);

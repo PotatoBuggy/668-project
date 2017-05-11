@@ -23,6 +23,12 @@ import android.widget.Toast;
 
 import com.example.a668.searchapp.controller.JsonController;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +42,7 @@ public class Result extends Fragment {
     RecyclerView  recycler_view;
     LinearLayoutManager recylerManager;
     RVAdapter rvadapter;
-    private ArrayList<Data> dataList;
+    private ArrayList<SearchResult> dataList;
     JsonController controller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,16 +85,58 @@ public class Result extends Fragment {
         return rootView;
     }
 
+    public static String getFileContents(final File file) throws IOException {
+        final InputStream inputStream = new FileInputStream(file);
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        boolean done = false;
+
+        while (!done) {
+            final String line = reader.readLine();
+            done = (line == null);
+
+            if (line != null) {
+                stringBuilder.append(line);
+            }
+        }
+
+        reader.close();
+        inputStream.close();
+
+        return stringBuilder.toString();
+    }
 
     //Add Data to dataList object from the Data class.
     private void initializeData(){
+        //C:\Users\spenc\Desktop\gitPortal\668\668-term-project\app\src\main\java\com\example\a668\searchapp\view\JSONparseTest2.txt
+        //File file = new File("JSONparseTest2.txt");
+        String response = "";
+        try {
+            InputStream is = getActivity().getAssets().open("JSONparseTest2.txt");
+            int size= is.available();
+            byte[] buffer= new byte[size];
+            is.read(buffer);
+            is.close();
+            Log.i("test",response);
+            response= new String(buffer);
+            //response = getFileContents(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //System.out.println(response);
+        SearchResultIndex test = new SearchResultIndex(response);
+        Log.i("url",test.searchResultIndex[0].getURL());
+        //SearchResultIndex test = new SearchResultIndex("crawlerResponse");
         dataList = new ArrayList<>();
-        dataList.add(new Data("Google", "Google is an American multinational technology company specializing in Internet-related services and products. These include online advertising technologies, search, cloud computing, software, and hardware. "));
-        dataList.add(new Data("SFSU", "San Francisco State University (commonly referred to as San Francisco State, SF State and SFSU) is a public research university located in San Francisco, California, United States. "));
+        dataList.add(new SearchResult("Title",test.searchResultIndex[0].getURL(),"Description"));
+        /*dataList.add(new Data("SFSU", "San Francisco State University (commonly referred to as San Francisco State, SF State and SFSU) is a public research university located in San Francisco, California, United States. "));
         dataList.add(new Data("Yahoo", "Yahoo! Inc.[5] is an American multinational technology company headquartered in Sunnyvale, California. Yahoo was founded by Jerry Yang and David Filo in January 1994 and was incorporated on March 2, 1995"));
         dataList.add(new Data("Youtube", "YouTube is an American video-sharing website headquartered in San Bruno, California. The service was created by three former PayPal employees—Chad Hurley, Steve Chen, and Jawed Karim—in February 2005. "));
         dataList.add(new Data("NBA", "The National Basketball Association (NBA) is the major men's professional basketball league in North America, and is widely considered to be the premier men's professional basketball league in the world."));
-        dataList.add(new Data("ilearn", "iLearn is a combination of several learning and teaching technologies that form a facility allowing academics and students to interact as part of a collaborative, flexible learning and teaching experience. "));
+        dataList.add(new Data("ilearn", "iLearn is a combination of several learning and teaching technologies that form a facility allowing academics and students to interact as part of a collaborative, flexible learning and teaching experience. "));*/
     }
 
     private void initializeAdapter(){
