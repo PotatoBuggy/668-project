@@ -80,7 +80,7 @@ public class Search extends Fragment {
                 bundleBox.putString("SearchData",searchData);
 
                 //Go to Result Fragment
-                Fragment nextView= new Result();
+                Fragment nextView= new ResultPage();
                 nextView.setArguments(bundleBox);
 
                 FragmentManager fraMng= getFragmentManager();
